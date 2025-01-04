@@ -3,11 +3,11 @@ package com.smart4aviation.queries;
 import com.smart4aviation.entities.Plane;
 
 public class RemovePlaneOnDay implements Query {
-    private Plane plane;
-    private int day;
+    private int planeId;
+    private long day;
 
-    public RemovePlaneOnDay(Plane plane, int day) {
-        this.plane = plane;
+    public RemovePlaneOnDay(int planeId, long day) {
+        this.planeId = planeId;
         this.day = day;
     }
 

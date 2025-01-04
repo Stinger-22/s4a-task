@@ -1,14 +1,12 @@
 package com.smart4aviation.queries;
 
-import com.smart4aviation.entities.Plane;
-
 public class ChangePlaneCapacityOnDay implements Query {
-    private Plane plane;
+    private int planeId;
     private int newCapacity;
-    private int day;
+    private long day;
 
-    public ChangePlaneCapacityOnDay(Plane plane, int capacity, int day) {
-        this.plane = plane;
+    public ChangePlaneCapacityOnDay(int planeId, int capacity, long day) {
+        this.planeId = planeId;
         this.newCapacity = capacity;
         this.day = day;
     }
