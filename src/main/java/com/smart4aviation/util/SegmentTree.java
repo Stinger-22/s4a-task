@@ -1,32 +1,23 @@
 package com.smart4aviation.util;
 
 public class SegmentTree {
-    private long[] tree;
+    private Node[] tree;
     private final int size;
     private final int range;
-    private final int startOfLastRow;
 
     public SegmentTree(int[] data) {
         this.range = data.length;
-        this.startOfLastRow = Utilities.nextPowerOfTwo(data.length);
-        this.size = this.startOfLastRow << 1;
-        this.tree = new long[this.size];
-        build(data);
+        this.size = Utilities.nextPowerOfTwo(data.length) << 1;
+        this.tree = new Node[this.size];
+        this.tree[0] = build(data, 0, range - 1);
     }
 
-    private void build(int[] data) {
-        for (int i = 0; i < range; i++) {
-            tree[startOfLastRow + i] = data[i];
+    private Node build(int[] data, int left, int right) {
+        if (left == right) {
+            return new Node(data[left]);
         }
-        int row = startOfLastRow >> 1;
-        int previousRow = startOfLastRow;
-        while (row > 0) {
-            for (int i = row; i < previousRow; i++) {
-                tree[i] = tree[i << 1] + tree[(i << 1) + 1];
-            }
-            previousRow = row;
-            row >>= 1;
-        }
+        int mid = (left + right) / 2;
+        return new Node(build(data, left, mid), build(data, mid + 1, right));
     }
 
     public long sum(int leftBoundary, int rightBoundary) {
@@ -36,15 +27,17 @@ public class SegmentTree {
         return sum(1, leftBoundary, rightBoundary, leftBoundary, rightBoundary);
     }
 
+    // TODO rewrite for tree implementation
     private long sum(int i, int tl, int tr, int l, int r) {
-        if (l > r) {
-            return 0;
-        }
-        if (l == tl && r == tr) {
-            return tree[i];
-        }
-        int mid = (l + r) / 2;
-        return sum(i << 1, l, mid, l, Math.min(mid, r)) + sum((i << 1) + 1, mid + 1, tr, Math.max(mid, l), r);
+        return 0;
+//        if (l > r) {
+//            return 0;
+//        }
+//        if (l == tl && r == tr) {
+//            return tree[i];
+//        }
+//        int mid = (l + r) / 2;
+//        return sum(i << 1, l, mid, l, Math.min(mid, r)) + sum((i << 1) + 1, mid + 1, tr, Math.max(mid, l), r);
     }
 
     public void print() {
@@ -52,10 +45,38 @@ public class SegmentTree {
         System.out.println("SegmentTree: ");
         System.out.println("size: " + size);
         System.out.println("range: " + range);
-        System.out.print("tree: ");
-        for (int i = 0; i < size; i++) {
-            System.out.print(tree[i] + " ");
-        }
+        System.out.println("tree: ");
+        printPreorder(tree[0]);
         System.out.println();
+    }
+
+    private void printPreorder(Node node) {
+        if (node == null) {
+            System.out.println("back");
+            return;
+        }
+        System.out.println(node.value + " ");
+        System.out.println("left");
+        printPreorder(node.left);
+        System.out.println("right");
+        printPreorder(node.right);
+        System.out.println("back");
+    }
+
+    private static class Node {
+        long value;
+        Node left;
+        Node right;
+
+        public Node(long value) {
+            this.value = value;
+        }
+
+        public Node(Node left, Node right) {
+            this.left = left;
+            this.right = right;
+            if (left != null) this.value += left.value;
+            if (right != null) this.value += right.value;
+        }
     }
 }
