@@ -1,15 +1,14 @@
 package com.smart4aviation.util;
 
 public class SegmentTree {
-    private Node[] tree;
+    private final Node root;
     private final int size;
     private final int range;
 
     public SegmentTree(int[] data) {
-        this.range = data.length;
-        this.size = Utilities.nextPowerOfTwo(data.length) << 1;
-        this.tree = new Node[this.size];
-        this.tree[0] = build(data, 0, range - 1);
+        range = data.length;
+        size = Utilities.nextPowerOfTwo(data.length) << 1;
+        root = build(data, 0, range - 1);
     }
 
     private Node build(int[] data, int left, int right) {
@@ -21,23 +20,25 @@ public class SegmentTree {
     }
 
     public long sum(int leftBoundary, int rightBoundary) {
-        if (leftBoundary < 1 || rightBoundary > range) {
+        if (leftBoundary < 0 || rightBoundary > range) {
             throw new IndexOutOfBoundsException("Boundaries out of provided data length");
         }
-        return sum(1, leftBoundary, rightBoundary, leftBoundary, rightBoundary);
+        return sum(root, 0, range, leftBoundary, rightBoundary);
     }
 
-    // TODO rewrite for tree implementation
-    private long sum(int i, int tl, int tr, int l, int r) {
-        return 0;
-//        if (l > r) {
-//            return 0;
-//        }
-//        if (l == tl && r == tr) {
-//            return tree[i];
-//        }
-//        int mid = (l + r) / 2;
-//        return sum(i << 1, l, mid, l, Math.min(mid, r)) + sum((i << 1) + 1, mid + 1, tr, Math.max(mid, l), r);
+    // l - queryLeftBoundary
+    // r - queryRightBoundary
+    // tl - currentLeftBoundary
+    // tr - currentRightBoundary
+    private long sum(Node node, int cl, int cr, int l, int r) {
+        if (l > r) {
+            return 0;
+        }
+        if (l == cl && r == cr) {
+            return node.value;
+        }
+        int mid = (cl + cr) / 2;
+        return sum(node.left, cl, mid, l, Math.min(mid, r)) + sum(node.right, mid + 1, cr, Math.max(mid + 1, l), r);
     }
 
     public void print() {
@@ -46,7 +47,7 @@ public class SegmentTree {
         System.out.println("size: " + size);
         System.out.println("range: " + range);
         System.out.println("tree: ");
-        printPreorder(tree[0]);
+        printPreorder(root);
         System.out.println();
     }
 
