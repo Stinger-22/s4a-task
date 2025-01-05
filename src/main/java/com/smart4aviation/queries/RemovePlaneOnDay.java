@@ -1,10 +1,8 @@
 package com.smart4aviation.queries;
 
-import com.smart4aviation.entities.Plane;
-
 public class RemovePlaneOnDay implements Query {
-    private int planeId;
-    private long day;
+    private final int planeId;
+    private final long day;
 
     public RemovePlaneOnDay(int planeId, long day) {
         this.planeId = planeId;
@@ -14,5 +12,10 @@ public class RemovePlaneOnDay implements Query {
     @Override
     public void execute() {
         throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public String toString() {
+        return "C " + planeId + " " + day;
     }
 }

@@ -21,7 +21,7 @@ public class SegmentTree {
 
     public long sum(int leftBoundary, int rightBoundary) {
         if (leftBoundary < 0 || rightBoundary > range) {
-            throw new IndexOutOfBoundsException("Boundaries out of provided data length");
+            throw new IndexOutOfBoundsException("Boundaries out of provided data length.");
         }
         return sum(root, 0, range, leftBoundary, rightBoundary);
     }
