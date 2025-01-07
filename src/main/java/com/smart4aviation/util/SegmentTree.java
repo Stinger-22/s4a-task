@@ -1,83 +1,29 @@
 package com.smart4aviation.util;
 
-public class SegmentTree {
-    private final Node root;
-    private final int size;
-    private final int range;
+/**
+ * <p>Generic interface for Segment Tree data structure. It stores information about array intervals as tree. This allows answering range queries over an array efficiently and quick modification of the array.</p>
+ * <p>This interface provides two methods for interaction with Segment Tree.</p>
+ * <p>Segment Tree indexing is zero-based.</p>
+ */
+public interface SegmentTree {
 
-    public SegmentTree(int[] data) {
-        range = data.length;
-        size = Utilities.nextPowerOfTwo(data.length) << 1;
-        root = build(data, 0, range - 1);
-    }
+    /**
+     * <p>Performs query on the given segment and returns it's result.</p>
+     * <p>Time complexity of this operation is O(log n).</p>
+     * @param leftBoundary of the segment. Minimum value is 0.
+     * @param rightBoundary of the segment. Maximum value is <code>length - 1</code> of initial array size from which Segment Tree was constructed.
+     * @return result of the query.
+     * @throws IllegalArgumentException if <code>leftBoundary</code> is bigger than <code>rightBoundary</code>.
+     * @throws IndexOutOfBoundsException if <code>leftBoundary</code> is less than zero or <code>rightBoundary</code> is greater or equal to initial array size from which Segment Tree was constructed.
+     */
+    long query(int leftBoundary, int rightBoundary);
 
-    private Node build(int[] data, int left, int right) {
-        if (left == right) {
-            return new Node(data[left]);
-        }
-        int mid = (left + right) / 2;
-        return new Node(build(data, left, mid), build(data, mid + 1, right));
-    }
-
-    public long sum(int leftBoundary, int rightBoundary) {
-        if (leftBoundary < 0 || rightBoundary > range) {
-            throw new IndexOutOfBoundsException("Boundaries out of provided data length.");
-        }
-        return sum(root, 0, range, leftBoundary, rightBoundary);
-    }
-
-    // l - queryLeftBoundary
-    // r - queryRightBoundary
-    // tl - currentLeftBoundary
-    // tr - currentRightBoundary
-    private long sum(Node node, int cl, int cr, int l, int r) {
-        if (l > r) {
-            return 0;
-        }
-        if (l == cl && r == cr) {
-            return node.value;
-        }
-        int mid = (cl + cr) / 2;
-        return sum(node.left, cl, mid, l, Math.min(mid, r)) + sum(node.right, mid + 1, cr, Math.max(mid + 1, l), r);
-    }
-
-    public void print() {
-        System.out.println("============");
-        System.out.println("SegmentTree: ");
-        System.out.println("size: " + size);
-        System.out.println("range: " + range);
-        System.out.println("tree: ");
-        printPreorder(root);
-        System.out.println();
-    }
-
-    private void printPreorder(Node node) {
-        if (node == null) {
-            System.out.println("back");
-            return;
-        }
-        System.out.println(node.value + " ");
-        System.out.println("left");
-        printPreorder(node.left);
-        System.out.println("right");
-        printPreorder(node.right);
-        System.out.println("back");
-    }
-
-    private static class Node {
-        long value;
-        Node left;
-        Node right;
-
-        public Node(long value) {
-            this.value = value;
-        }
-
-        public Node(Node left, Node right) {
-            this.left = left;
-            this.right = right;
-            if (left != null) this.value += left.value;
-            if (right != null) this.value += right.value;
-        }
-    }
+    /**
+     * <p>Updates number in the data array to the given one (data[position] = newData) and updates related nodes.</p>
+     * <p>Time complexity of this operation is O(log n).</p>
+     * @param position index of the number to update.
+     * @param newData new value for the number on given index.
+     * @throws IndexOutOfBoundsException if <code>position</code> is negative or is greater or equal to initial array size from which Segment Tree was constructed.
+     */
+    void update(int position, int newData);
 }
