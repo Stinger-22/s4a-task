@@ -1,4 +1,4 @@
-package com.smart4aviation;
+package com.smart4aviation.airport;
 
 import com.smart4aviation.queries.*;
 

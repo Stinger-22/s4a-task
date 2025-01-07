@@ -1,6 +1,12 @@
 package com.smart4aviation.queries;
 
+import com.smart4aviation.airport.capacity.CapacityTable;
+
+/**
+ * <p>This query changes plane maximum passenger capacity starting on the provided day.</p>
+ */
 public class ChangePlaneCapacityOnDay implements Query {
+    private CapacityTable capacityTable;
     private final int planeId;
     private final int newCapacity;
     private final long day;
@@ -13,11 +19,17 @@ public class ChangePlaneCapacityOnDay implements Query {
 
     @Override
     public void execute() {
-        throw new RuntimeException("Not implemented");
+        capacityTable.newDay(day);
+        capacityTable.update(planeId, newCapacity);
     }
 
     @Override
     public String toString() {
         return "P " + planeId + " " + newCapacity + " " + day;
+    }
+
+    @Override
+    public void setCapacityTable(CapacityTable capacityTable) {
+        this.capacityTable = capacityTable;
     }
 }
