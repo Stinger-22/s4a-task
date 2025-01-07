@@ -19,7 +19,7 @@ public interface SegmentTree {
     long query(int leftBoundary, int rightBoundary);
 
     /**
-     * <p>Updates number in the data array to the given one (data[position] = newData) and updates related nodes.</p>
+     * <p>Updates number in the data array to the given one (data[position] = newData) and updates related nodes. Updated nodes are new objects.</p>
      * <p>Time complexity of this operation is O(log n).</p>
      * @param position index of the number to update.
      * @param newData new value for the number on given index.

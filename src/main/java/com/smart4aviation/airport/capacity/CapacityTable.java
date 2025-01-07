@@ -6,7 +6,7 @@ import java.util.Deque;
 
 /**
  * <p>Implementation of Persistent Segment Tree which uses <code>Deque</code> for saving root nodes of each tree.</p>
- * <p>Each element of <code>Deque</code> has saved state of airport planes capacities. When query which changes state is processed (except removing plane), new state is saved in the <code>Deque</code>.</p>
+ * <p>Each element of <code>Deque</code> has saved state of airport planes capacities. When query which changes state is processed (except removing plane), new state is saved in the <code>Deque</code>. Each instance of <code>CapacityDay</code> shares nodes which are not updated, so it's memory efficient.</p>
  */
 public class CapacityTable {
     private final Deque<CapacityDay> table;
@@ -21,7 +21,7 @@ public class CapacityTable {
      * @param day on which the state expects changes.
      */
     public void newDay(long day) {
-        table.push(new CapacityDay(getLastDay(), day));
+        table.push(new CapacityDay(getLastCapacityDay(), day));
     }
 
     /**
@@ -30,7 +30,7 @@ public class CapacityTable {
      * @param newData new capacity of plane.
      */
     public void update(int position, int newData) {
-        getLastDay().update(position, newData);
+        getLastCapacityDay().update(position, newData);
     }
 
     /**
@@ -61,6 +61,10 @@ public class CapacityTable {
         return totalCapacity;
     }
 
+    public long getLastDay() {
+        return getLastCapacityDay().getDay();
+    }
+
     public void print() {
         System.out.println("============");
         System.out.println("CapacityTable: ");
@@ -71,7 +75,7 @@ public class CapacityTable {
         }
     }
 
-    private CapacityDay getLastDay() {
+    private CapacityDay getLastCapacityDay() {
         return table.peek();
     }
 }

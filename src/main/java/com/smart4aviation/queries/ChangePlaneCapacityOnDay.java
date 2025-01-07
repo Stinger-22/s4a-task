@@ -19,7 +19,9 @@ public class ChangePlaneCapacityOnDay implements Query {
 
     @Override
     public void execute() {
-        capacityTable.newDay(day);
+        if (capacityTable.getLastDay() != day) {
+            capacityTable.newDay(day);
+        }
         capacityTable.update(planeId, newCapacity);
     }
 
