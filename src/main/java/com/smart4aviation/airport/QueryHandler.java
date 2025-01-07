@@ -1,6 +1,7 @@
 package com.smart4aviation.airport;
 
 import com.smart4aviation.airport.capacity.CapacityTable;
+import com.smart4aviation.airport.view.View;
 import com.smart4aviation.queries.Query;
 
 import java.util.Scanner;
@@ -10,20 +11,20 @@ import java.util.Scanner;
  */
 public class QueryHandler {
     private final QueryParser parser;
-    private CapacityTable capacityTable;
+    private final CapacityTable capacityTable;
+    private final View view;
 
-    public QueryHandler(Scanner scanner) {
+    public QueryHandler(Scanner scanner, CapacityTable capacityTable, View view) {
         this.parser = new QueryParser(scanner);
-    }
-
-    void setCapacityTable(CapacityTable capacityTable) {
         this.capacityTable = capacityTable;
+        this.view = view;
     }
 
     public void processQuery() {
         Query query = parser.next();
         query.setCapacityTable(capacityTable);
         query.execute();
+        view.show(query);
     }
 
     public void processQuery(int numberOfQueries) {
@@ -33,10 +34,8 @@ public class QueryHandler {
     }
 
     public void processAllQueries() {
-        Query query;
-        while ((query = parser.next()) != null) {
-            query.setCapacityTable(capacityTable);
-            query.execute();
+        while (parser.hasNext()) {
+            processQuery();
         }
     }
 }

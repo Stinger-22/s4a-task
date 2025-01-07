@@ -12,6 +12,7 @@ public class TotalCapacityByPlanesActiveOnDay implements Query {
     private final int firstRoute;
     private final int lastRoute;
     private final long day;
+    private BigInteger totalCapacity;
 
     public TotalCapacityByPlanesActiveOnDay(int firstRoute, int lastRoute, long day) {
         this.firstRoute = firstRoute;
@@ -21,8 +22,7 @@ public class TotalCapacityByPlanesActiveOnDay implements Query {
 
     @Override
     public void execute() {
-        BigInteger result = capacityTable.findTotalCapacity(firstRoute, lastRoute, day);
-        System.out.println(result);
+        totalCapacity = capacityTable.findTotalCapacity(firstRoute, lastRoute, day);
     }
 
     @Override
@@ -33,5 +33,9 @@ public class TotalCapacityByPlanesActiveOnDay implements Query {
     @Override
     public void setCapacityTable(CapacityTable capacityTable) {
         this.capacityTable = capacityTable;
+    }
+
+    public BigInteger getTotalCapacity() {
+        return totalCapacity;
     }
 }

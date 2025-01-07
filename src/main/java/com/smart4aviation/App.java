@@ -1,7 +1,6 @@
 package com.smart4aviation;
 
 import com.smart4aviation.airport.Airport;
-import com.smart4aviation.airport.QueryHandler;
 
 import java.util.Scanner;
 
@@ -10,7 +9,6 @@ public class App {
         Scanner scanner = new Scanner(System.in);
 
         Airport airport = loadStartupData(scanner);
-        airport.setQueryHandler(new QueryHandler(scanner));
         airport.run();
 
         scanner.close();
@@ -23,6 +21,6 @@ public class App {
         for (int i = 0; i < numberOfRoutes; i++) {
             planeCapacities[i] = scanner.nextInt();
         }
-        return new Airport(planeCapacities, numberOfQueries);
+        return new Airport(scanner, planeCapacities, numberOfQueries);
     }
 }
