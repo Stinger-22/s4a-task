@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>smart4aviation-task</name>
-  <url>https://maven.apache.org</url>
+  <url>https://github.com/Stinger-22/s4a-task</url>
 
   <build>
     <finalName>${project.artifactId}</finalName>
