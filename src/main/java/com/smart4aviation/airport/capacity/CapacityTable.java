@@ -53,6 +53,9 @@ public class CapacityTable {
     public BigInteger findTotalCapacity(int firstRoute, int lastRoute, long day) {
         BigInteger totalCapacity = BigInteger.ZERO;
         for (CapacityDay capacityDay : table) {
+            if (capacityDay.getDay() > day) {
+                continue;
+            }
             BigInteger capacityOnDay = BigInteger.valueOf(capacityDay.query(firstRoute, lastRoute));
             BigInteger numberOfDays = new BigInteger(String.valueOf(day - capacityDay.getDay()));
             totalCapacity = totalCapacity.add(capacityOnDay.multiply(numberOfDays));
