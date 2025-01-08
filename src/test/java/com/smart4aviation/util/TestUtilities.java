@@ -16,7 +16,7 @@ public class TestUtilities {
         assertEquals(expected, Utilities.nextPowerOfTwo(value));
     }
 
-    @DisplayName("Throw error on invalid number for finding next power of two")
+    @DisplayName("Throw exception on invalid number for finding next power of two")
     @ParameterizedTest(name = "Invalid value {0}")
     @ValueSource(ints = {0, -1, -2, Integer.MIN_VALUE, Integer.MAX_VALUE})
     void invalidNextPowerOfTwo(int value) {
