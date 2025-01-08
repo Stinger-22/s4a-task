@@ -44,23 +44,35 @@ public class QueryParser {
                 int planeId = scanner.nextInt();
                 int newCapacity = scanner.nextInt();
                 long day = scanner.nextInt();
+                if (planeId < 1 || newCapacity < 0 || day < 0) {
+                    throw new IllegalArgumentException("Invalid query");
+                }
                 return new ChangePlaneCapacityOnDay(planeId - 1, newCapacity, day);
             }
             case 'C': {
                 int planeId = scanner.nextInt();
                 long day = scanner.nextInt();
+                if (planeId < 1 || day < 0) {
+                    throw new IllegalArgumentException("Invalid query");
+                }
                 return new RemovePlaneOnDay(planeId - 1, day);
             }
             case 'A': {
                 int planeId = scanner.nextInt();
                 int newCapacity = scanner.nextInt();
                 long day = scanner.nextInt();
+                if (planeId < 1 || newCapacity < 0 || day < 0) {
+                    throw new IllegalArgumentException("Invalid query");
+                }
                 return new AssignPlaneChangeCapacityOnDay(planeId - 1, newCapacity, day);
             }
             case 'Q': {
                 int firstRoute = scanner.nextInt();
                 int lastRoute = scanner.nextInt();
                 long day = scanner.nextInt();
+                if (day < 0) {
+                    throw new IllegalArgumentException("Invalid query");
+                }
                 return new TotalCapacityByPlanesActiveOnDay(firstRoute - 1, lastRoute - 1, day);
             }
             default:
