@@ -1,7 +1,6 @@
 package com.smart4aviation.airport;
 
 import com.smart4aviation.queries.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
@@ -9,8 +8,8 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestQueryParser {
-        @Test
-    void testParseP() {
+    @Test
+    void parseP() {
         Scanner scanner = new Scanner("P 1 3 5");
         QueryParser queryParser = new QueryParser(scanner);
         Query query = queryParser.next();
@@ -18,7 +17,7 @@ public class TestQueryParser {
     }
 
     @Test
-    void testParseA() {
+    void parseA() {
         Scanner scanner = new Scanner("A 3 2 1");
         QueryParser queryParser = new QueryParser(scanner);
         Query query = queryParser.next();
@@ -26,7 +25,7 @@ public class TestQueryParser {
     }
 
     @Test
-    void testParseQ() {
+    void parseQ() {
         Scanner scanner = new Scanner("Q 0 4 5");
         QueryParser queryParser = new QueryParser(scanner);
         Query query = queryParser.next();
@@ -34,7 +33,7 @@ public class TestQueryParser {
     }
 
     @Test
-    void testParseC() {
+    void parseC() {
         Scanner scanner = new Scanner("C 1 2");
         QueryParser queryParser = new QueryParser(scanner);
         Query query = queryParser.next();
@@ -42,10 +41,9 @@ public class TestQueryParser {
     }
 
     @Test
-    void testParseUnknown() {
+    void parseUnknown() {
         Scanner scanner = new Scanner("L 2 9");
         QueryParser queryParser = new QueryParser(scanner);
-        assertThrows(IllegalArgumentException.class, () -> queryParser.next());
+        assertThrows(IllegalArgumentException.class, queryParser::next);
     }
-
 }
