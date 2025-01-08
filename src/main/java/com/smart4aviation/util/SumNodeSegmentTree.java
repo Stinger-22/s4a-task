@@ -121,19 +121,25 @@ public class SumNodeSegmentTree implements SegmentTree {
         }
     }
 
-    public void printLastRow() {
-        printLastRow(root);
+    public String lastRow() {
+        StringBuilder sb = new StringBuilder();
+        lastRow(sb, root);
+        return sb.toString();
     }
 
-    private void printLastRow(Node node) {
+    private void lastRow(StringBuilder sb, Node node) {
         if (node == null) {
             return;
         }
         if ((node.left == null) & (node.right == null)) {
-            System.out.print(node.value + " ");
+            sb.append(node.value).append(" ");
         }
-        printLastRow(node.left);
-        printLastRow(node.right);
+        lastRow(sb, node.left);
+        lastRow(sb, node.right);
+    }
+
+    public void printLastRow() {
+        System.out.println(lastRow());
     }
 
     protected static class Node {

@@ -2,7 +2,10 @@ package com.smart4aviation.airport;
 
 import com.smart4aviation.airport.capacity.CapacityTable;
 import com.smart4aviation.airport.view.ConsoleView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -10,6 +13,8 @@ import java.util.Scanner;
  * @see QueryHandler
  */
 public class Airport {
+    private static final Logger logger = LogManager.getLogger();
+
     private final CapacityTable capacityTable;
     private final QueryHandler queryHandler;
     private int numberOfQueries;
@@ -33,12 +38,15 @@ public class Airport {
         this.numberOfQueries = numberOfQueries;
         this.capacityTable = new CapacityTable(planeCapacities);
         this.queryHandler = new QueryHandler(scanner, this.capacityTable, new ConsoleView());
+        logger.debug("Created airport with initial plane capacities: {}", Arrays.toString(planeCapacities));
     }
 
     /**
      * <p>Process incoming queries.</p>
      */
     public void run() {
+        logger.info("Airport started working");
         queryHandler.processQuery(numberOfQueries);
+        logger.info("Airport finished working");
     }
 }

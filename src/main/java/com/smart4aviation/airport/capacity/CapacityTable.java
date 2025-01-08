@@ -1,5 +1,8 @@
 package com.smart4aviation.airport.capacity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigInteger;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -9,6 +12,8 @@ import java.util.Deque;
  * <p>Each element of <code>Deque</code> has saved state of airport planes capacities. When query which changes state is processed (except removing plane), new state is saved in the <code>Deque</code>. Each instance of <code>CapacityDay</code> shares nodes which are not updated, so it's memory efficient.</p>
  */
 public class CapacityTable {
+    private static final Logger logger = LogManager.getLogger();
+
     private final Deque<CapacityDay> table;
 
     public CapacityTable(int[] dayZeroCapacities) {
@@ -68,17 +73,20 @@ public class CapacityTable {
         return getLastCapacityDay().getDay();
     }
 
-    public void print() {
-        System.out.println("============");
-        System.out.println("CapacityTable: ");
-        for (CapacityDay capacityDay : table) {
-            System.out.print("D" + capacityDay.getDay() + " ");
-            capacityDay.printLastRow();
-            System.out.println();
-        }
-    }
 
     private CapacityDay getLastCapacityDay() {
         return table.peek();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CapacityTable:\n");
+        for (CapacityDay capacityDay : table) {
+            sb.append("D").append(capacityDay.getDay()).append(" ");
+            sb.append(capacityDay.lastRow()).append("\n");
+        }
+        sb.setLength(Math.max(sb.length() - 1, 0));
+        return sb.toString();
     }
 }

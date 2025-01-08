@@ -1,6 +1,8 @@
 package com.smart4aviation.airport;
 
 import com.smart4aviation.queries.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
@@ -8,6 +10,8 @@ import java.util.Scanner;
  * <p>Instances of this class are responsible for reading input queries using the given scanner.</p>
  */
 public class QueryParser {
+    private static final Logger logger = LogManager.getLogger();
+
     private final Scanner scanner;
 
     /**
@@ -76,6 +80,7 @@ public class QueryParser {
                 return new TotalCapacityByPlanesActiveOnDay(firstRoute - 1, lastRoute - 1, day);
             }
             default:
+                logger.error("Invalid query type: {}", queryType);
                 throw new IllegalArgumentException("Invalid query type");
         }
     }

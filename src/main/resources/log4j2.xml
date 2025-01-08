@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration log4j2.statusLoggerLevel="debug" dest="status.log">
+    <Appenders>
+        <File name="file" fileName="latest.log" append="false">
+            <PatternLayout>
+                <Pattern> %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root>
+            <AppenderRef ref="file"/>
+        </Root>
+        <Logger name="com.smart4aviation" level="debug" additivity="false">
+            <AppenderRef ref="file"/>
+        </Logger>
+    </Loggers>
+</Configuration>
